@@ -14,7 +14,8 @@ const changeButtonVariant = () => {
   <div class="px-6">
     <div class="text-grey mb-4">Додані маркери</div>
     <div class="px-5">
-      <IInput label="some label"
+      <IInput label="some label" />
+      <a href="/" class="end-0">Click</a>
     </div>
     <slot name="label"></slot>
     <slot name="list">

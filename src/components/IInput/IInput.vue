@@ -1,7 +1,19 @@
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
-  label: String
+  label: String,
+  placeholder: String,
+  type: {
+    default: 'text',
+    type: String
+  }
 })
+
+const text = ref('')
+const changeText = (event) => {
+  text.value = event.target.value
+}
 </script>
 
 <template>
@@ -10,7 +22,8 @@ const props = defineProps({
       <span class="block text-xs px-3 mb-2">{{ props.label }}</span>
       <input
         class="w-full text-sm rounded-[4px] border-[1px] py-2 px-3 border-[#eaeaea] focus:outline-primary"
-        type="text"
+        v-bind="{ ...$props, ...$attrs }"
+        @input="changeText"
       />
     </label>
   </div>
