@@ -10,6 +10,10 @@ const props = defineProps({
   }
 })
 
+defineOptions({
+  inheritAttrs: false
+})
+
 const text = ref('')
 const changeText = (event) => {
   text.value = event.target.value
