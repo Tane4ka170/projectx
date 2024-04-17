@@ -1,6 +1,7 @@
 <script setup>
 // import HomepageView from './views/HomepageView.vue'
 // import FavoritePlaces from './components/FavoritePlaces/FavoritePlaces.vue'
+import LoginForm from './components/Auth/LoginForm/LoginForm.vue'
 import RegistrationForm from './components/Auth/RegistrationForm/RegistrationForm.vue'
 </script>
 
@@ -10,4 +11,5 @@ import RegistrationForm from './components/Auth/RegistrationForm/RegistrationFor
     <FavoritePlaces />
   </div> -->
   <RegistrationForm @submit="console.log" />
+  <LoginForm />
 </template>
