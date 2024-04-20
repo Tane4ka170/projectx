@@ -1,26 +1,15 @@
 <script setup>
-// import HomepageView from './views/HomepageView.vue'
-// import FavoritePlaces from './components/FavoritePlaces/FavoritePlaces.vue'
-import { ref } from 'vue'
-import LoginForm from './components/Auth/LoginForm/LoginForm.vue'
-import RegistrationForm from './components/Auth/RegistrationForm/RegistrationForm.vue'
-import CreateNewPlaceModal from './components/CreateNewPlaceModal/CreateNewPlaceModal.vue'
-const isOpen = ref(false)
-const closeModal = () => {
-  isOpen.value = false
-}
-const openModal = () => {
-  isOpen.value = true
-}
+import FavoritePlaces from './components/FavoritePlaces/FavoritePlaces.vue'
+import OpenLayersMap from './components/OpenLayersMap/OpenLayersMap.vue'
 </script>
 
 <template>
-  <!-- <HomepageView /> -->
-  <!-- <div class="bg-white h-screen w-[400px]">
-    <FavoritePlaces />
-  </div> -->
-  <button @click="openModal">Click</button>
-  <RegistrationForm @submit="console.log" />
-  <LoginForm />
-  <CreateNewPlaceModal :is-open="isOpen" @close="closeModal" @submit="console.log" />
+  <main class="flex h-screen">
+    <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
+      <FavoritePlaces />
+    </div>
+    <div class="w-full h-full flex items-center justify-center text-6xl">
+      <OpenLayersMap class="w-full h-full" :center="[30.5233, 50.4501]" :zoom="15"></OpenLayersMap>
+    </div>
+  </main>
 </template>
