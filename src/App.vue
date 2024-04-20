@@ -4,7 +4,7 @@
 import { ref } from 'vue'
 import LoginForm from './components/Auth/LoginForm/LoginForm.vue'
 import RegistrationForm from './components/Auth/RegistrationForm/RegistrationForm.vue'
-import IModal from './components/IModal/IModal.vue'
+import CreateNewPlaceModal from './components/CreateNewPlaceModal/CreateNewPlaceModal.vue'
 const isOpen = ref(false)
 const closeModal = () => {
   isOpen.value = false
@@ -22,5 +22,5 @@ const openModal = () => {
   <button @click="openModal">Click</button>
   <RegistrationForm @submit="console.log" />
   <LoginForm />
-  <IModal @close="closeModal" v-if="isOpen">Zorra</IModal>
+  <CreateNewPlaceModal :is-open="isOpen" @close="closeModal" @submit="console.log" />
 </template>
