@@ -1,7 +1,7 @@
 <script setup>
+import { ref } from 'vue'
 import FavoritePlaces from './components/FavoritePlaces/FavoritePlaces.vue'
 import OpenLayersMap from './components/OpenLayersMap/OpenLayersMap.vue'
-import MarkerIcon from './components/icons/MarkerIcon.vue'
 
 const favoritePlaces = [
   {
@@ -20,16 +20,24 @@ const favoritePlaces = [
   }
 ]
 
-const markers = favoritePlaces.map((place) => ({
+const markers = favoritePlaces.map((place, index) => ({
   title: place.title,
-  lngLat: place.lngLat
+  lngLat: place.lngLat,
+  index: index
 }))
+
+const activeId = ref(null)
+const changeActiveId = (index) => {
+  activeId.value = index
+}
+
+defineExpose({ activeId, changeActiveId })
 </script>
 
 <template>
   <main class="flex h-screen">
     <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
-      <FavoritePlaces :items="favoritePlaces" />
+      <FavoritePlaces :items="favoritePlaces" :active-id="activeId" />
     </div>
     <div class="w-full h-full flex items-center justify-center text-6xl">
       <OpenLayersMap
@@ -37,6 +45,8 @@ const markers = favoritePlaces.map((place) => ({
         :center="[30.5233, 50.4501]"
         :zoom="15"
         :markers="markers"
+        :active-id="activeId"
+        :change-active-id="changeActiveId"
       >
       </OpenLayersMap>
     </div>

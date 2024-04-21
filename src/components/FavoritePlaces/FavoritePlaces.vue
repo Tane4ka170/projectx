@@ -12,6 +12,10 @@ const props = defineProps({
   items: {
     required: true,
     type: Array
+  },
+  activeId: {
+    required: true,
+    type: [Number, null]
   }
 })
 </script>
@@ -27,6 +31,7 @@ const props = defineProps({
         :title="place.title"
         :description="place.description"
         :img="place.img"
+        :is-active="place.id === props.activeId"
       />
     </slot>
     <IButton class="w-full mt-10" :variant="buttonVariant" @click="changeButtonVariant"
