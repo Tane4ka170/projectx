@@ -1,9 +1,7 @@
 <script setup>
-import GreetingView from './views/GreetingView.vue'
-import HomepageView from './views/HomepageView.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <GreetingView />
-  <HomepageView />
+  <router-view />
 </template>
