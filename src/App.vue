@@ -30,14 +30,21 @@ const activeId = ref(null)
 const changeActiveId = (index) => {
   activeId.value = index
 }
-
 defineExpose({ activeId, changeActiveId })
+const map = ref(null)
+const changePlace = (id) => {
+  const { lngLat } = favoritePlaces.find((place) => place.id === id)
+  changeActiveId(id)
+  if (map.value) {
+    map.value.flyTo({ center: lngLat })
+  }
+}
 </script>
 
 <template>
   <main class="flex h-screen">
     <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
-      <FavoritePlaces :items="favoritePlaces" :active-id="activeId" />
+      <FavoritePlaces :items="favoritePlaces" :active-id="activeId" @place-clicked="changePlace" />
     </div>
     <div class="w-full h-full flex items-center justify-center text-6xl">
       <OpenLayersMap
@@ -47,6 +54,7 @@ defineExpose({ activeId, changeActiveId })
         :markers="markers"
         :active-id="activeId"
         :change-active-id="changeActiveId"
+        @mb-created="(mapInstance) => (map = mapInstance)"
       >
       </OpenLayersMap>
     </div>
