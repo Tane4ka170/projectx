@@ -1,22 +1,62 @@
 <script setup>
-import IButton from '../components/IButton/IButton.vue'
+import { ref } from 'vue'
+import FavoritePlaces from '../components/FavoritePlaces/FavoritePlaces.vue'
+import OpenLayersMap from '../components/OpenLayersMap/OpenLayersMap.vue'
+
+const favoritePlaces = [
+  {
+    id: 1,
+    title: 'New place 1',
+    description: 'Super description 1',
+    img: '',
+    lngLat: [30.5234, 50.4501]
+  },
+  {
+    id: 2,
+    title: 'New place 2',
+    description: 'Super description 2',
+    img: '',
+    lngLat: [30.5367, 50.4422]
+  }
+]
+
+const markers = favoritePlaces.map((place, index) => ({
+  title: place.title,
+  lngLat: place.lngLat,
+  index: index
+}))
+
+const activeId = ref(null)
+const changeActiveId = (index) => {
+  activeId.value = index
+}
+defineExpose({ activeId, changeActiveId })
+const map = ref(null)
+const changePlace = (id) => {
+  const { lngLat } = favoritePlaces.find((place) => place.id === id)
+  changeActiveId(id)
+  if (map.value) {
+    map.value.flyTo({ center: lngLat })
+  }
+}
 </script>
 
 <template>
   <main class="flex h-screen">
-    <section class="flex-1 flex justify-center items-center px-5 bg-primary">
-      <div class="text-white text-center">
-        <img class="inline mb-6" src="../assets/img/map-pin.svg" alt="" />
-        <h1 class="font-bold text-4xl mb-7">IT traveler</h1>
-        <p class="leading-6 mb-11">
-          Простий і зручний веб додаток, який дозволить тобі відмічати твої улюблені місця, а також
-          ті, в яких би ти дуже хотів побувати. Тож не зволікай і спробуй сам.
-        </p>
-        <IButton> Почати роботу</IButton>
-      </div>
-    </section>
-    <section class="flex-1">
-      <img class="h-full object-cover w-full" src="../assets/img/static-map.png" alt="" />
-    </section>
+    <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
+      <FavoritePlaces :items="favoritePlaces" :active-id="activeId" @place-clicked="changePlace" />
+    </div>
+    <div class="w-full h-full flex items-center justify-center text-6xl">
+      <OpenLayersMap
+        class="w-full h-full"
+        :center="[30.5233, 50.4501]"
+        :zoom="15"
+        :markers="markers"
+        :active-id="activeId"
+        :change-active-id="changeActiveId"
+        @mb-created="(mapInstance) => (map = mapInstance)"
+      >
+      </OpenLayersMap>
+    </div>
   </main>
 </template>
