@@ -1,6 +1,7 @@
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+
 const props = defineProps({
   variant: {
     default: 'primary',
@@ -9,7 +10,11 @@ const props = defineProps({
       return ['primary', 'gradient', 'outlined'].includes(value)
     }
   },
-  to: String
+  to: String,
+  isLoading: {
+    default: false,
+    type: Boolean
+  }
 })
 const bgStyles = computed(() => {
   return props.variant === 'gradient'
@@ -23,6 +28,8 @@ const componentName = computed(() => {
 const link = computed(() => {
   return isLink.value ? props.to : undefined
 })
+
+const isLoading = ref(false)
 </script>
 
 <template>
@@ -32,6 +39,9 @@ const link = computed(() => {
     :class="bgStyles"
     :to="link"
   >
-    <slot></slot>
+    <template v-if="props.isLoading>Loading</template>
+    <template v-else>
+      <slot></slot>
+    </template>
   </component>
 </template>

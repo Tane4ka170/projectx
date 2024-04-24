@@ -1,5 +1,4 @@
 <script setup>
-// import { ref } from 'vue'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -15,11 +14,6 @@ const props = defineProps({
 defineOptions({
   inheritAttrs: false
 })
-
-// const text = ref('')
-// const changeText = (event) => {
-//   text.value = event.target.value
-// }
 
 const emit = defineEmits(['update:modelValue'])
 const baseStyles =

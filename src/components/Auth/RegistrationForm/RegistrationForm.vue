@@ -9,13 +9,22 @@ const userData = reactive({
   email: '',
   password: ''
 })
+
+const props = defineProps({
+  isLoading: {
+    default: false,
+    type: Boolean
+  }
+})
 </script>
 
 <template>
   <form @submit.prevent="emit('submit', toRaw(userData))">
     <IInput label="Повне ім'я" class="mb-4" v-model="userData.name" />
     <IInput label="Електронна пошта" placeholder="email@gmail.com" v-model="userData.email" />
-    <IInput label="Пароль" type="password" disabled v-model="userData.password" />
-    <IButton class="mt-5" variant="gradient" type="submit">Створити аккаунт</IButton>
+    <IInput label="Пароль" type="password" v-model="userData.password" />
+    <IButton class="mt-5" variant="gradient" type="submit" :is-loading="props.isLoading"
+      >Створити аккаунт</IButton
+    >
   </form>
 </template>
