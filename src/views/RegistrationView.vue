@@ -1,9 +1,13 @@
 <script setup>
 import RegistrationForm from '../components/Auth/RegistrationForm/RegistrationForm.vue'
-import { registrUser } from '@/api/user'
+import { registrUser } from '../api/user'
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
-const handleSubmit = async (userData) => {
+const router = useRouter()
+const isLoading = ref(false)
+
+const handleRegisterUser = async (userData) => {
   isLoading.value = true
   try {
     await registrUser(userData)
@@ -14,10 +18,8 @@ const handleSubmit = async (userData) => {
     isLoading.value = false
   }
 }
-
-const router = useRouter()
 </script>
 
 <template>
-  <RegistrationForm @submit="handleSubmit" :isLoading="isLoading" />
+  <RegistrationForm @submit="handleRegisterUser" :is-loading="isLoading" />
 </template>

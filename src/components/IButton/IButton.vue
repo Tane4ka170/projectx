@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, computed, ref } from 'vue'
+import { defineProps, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const props = defineProps({
@@ -16,20 +16,21 @@ const props = defineProps({
     type: Boolean
   }
 })
+
 const bgStyles = computed(() => {
   return props.variant === 'gradient'
     ? 'bg-gradient-to-r from-[#FFA279] to-[#F3743D]'
     : 'bg-[#FFA279]'
 })
+
 const isLink = computed(() => !!props.to)
+
 const componentName = computed(() => {
   return isLink.value ? RouterLink : 'button'
 })
 const link = computed(() => {
   return isLink.value ? props.to : undefined
 })
-
-const isLoading = ref(false)
 </script>
 
 <template>
@@ -39,7 +40,7 @@ const isLoading = ref(false)
     :class="bgStyles"
     :to="link"
   >
-    <template v-if="props.isLoading>Loading</template>
+    <template v-if="props.isLoading">Loading...</template>
     <template v-else>
       <slot></slot>
     </template>
