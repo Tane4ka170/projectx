@@ -1,24 +1,21 @@
 <script setup>
-import { ref } from 'vue'
 import LoginForm from '../components/Auth/LoginForm/LoginForm.vue'
 import { login } from '@/api/user'
 import { useRouter } from 'vue-router'
-
-const isLoading = ref(false)
-const handleLogin = async (userData) => {
-  try {
-    await login(userData)
-    router.replace('/map')
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-}
+import { useMutation } from '@/composables/useMutation'
 
 const router = useRouter()
+const {
+  isLoading,
+  error,
+  mutation: handleLogin
+} = useMutation({
+  mutationFn: login,
+  onSuccess: () => router.replace('/map')
+})
 </script>
 
 <template>
   <LoginForm @submit="handleLogin" :is-loading="isLoading" />
+  <div v-if="error" class="text-red-500">{{ error.message }}</div>
 </template>
