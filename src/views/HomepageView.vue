@@ -1,26 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import FavoritePlaces from '../components/FavoritePlaces/FavoritePlaces.vue'
 import OpenLayersMap from '../components/OpenLayersMap/OpenLayersMap.vue'
+import { getFavoritePlaces } from '@/api/favorite-places'
 
-const favoritePlaces = [
-  {
-    id: 1,
-    title: 'New place 1',
-    description: 'Super description 1',
-    img: '',
-    lngLat: [30.5234, 50.4501]
-  },
-  {
-    id: 2,
-    title: 'New place 2',
-    description: 'Super description 2',
-    img: '',
-    lngLat: [30.5367, 50.4422]
-  }
-]
+const favoritePlaces = ref([])
 
-const markers = favoritePlaces.map((place, index) => ({
+const markers = favoritePlaces.value.map((place, index) => ({
   title: place.title,
   lngLat: place.lngLat,
   index: index
@@ -33,12 +19,17 @@ const changeActiveId = (index) => {
 defineExpose({ activeId, changeActiveId })
 const map = ref(null)
 const changePlace = (id) => {
-  const { lngLat } = favoritePlaces.find((place) => place.id === id)
+  const { lngLat } = favoritePlaces.value.find((place) => place.id === id)
   changeActiveId(id)
   if (map.value) {
     map.value.flyTo({ center: lngLat })
   }
 }
+
+onMounted(async () => {
+  const { data } = await getFavoritePlaces()
+  favoritePlaces.value = data
+})
 </script>
 
 <template>
