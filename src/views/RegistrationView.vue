@@ -1,6 +1,5 @@
 <script setup>
 import RegistrationForm from '../components/Auth/RegistrationForm/RegistrationForm.vue'
-import { registrUser } from '../api/user'
 import { authService } from '@/api/authService'
 import { useRouter } from 'vue-router'
 import { useMutation } from '@/composables/useMutation'
